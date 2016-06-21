@@ -1,0 +1,13 @@
+## CREATE NEW PROJECT ###
+echo "# MiscProjects" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/altear/MiscProjects.git
+git push -u origin master
+
+
+### PUSH TO EXISTING ###
+git remote add origin https://github.com/altear/MiscProjects.git
+git push -u origin master
+
