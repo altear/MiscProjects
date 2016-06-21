@@ -1,0 +1,25 @@
+#!python3
+
+import requests, re
+
+i=1
+while (True):
+	res = requests.get('http://xkcd.com/'+str(i)+'/')
+	if (res.status_code == requests.codes.ok):
+		i += (i==404)*1 + 1
+		repeat=0
+
+		#re_imgsrc = re.compile('<div id="comic">(.*?)</div>')
+		re_imgsrc = re.compile('<divy
+(.*?)<')
+		imgsrc= re_imgsrc.search(res.text)
+		if (len(imgsrc.group(1))):
+			print(imgsrc.group(1))
+		continue
+	elif (res.status_code == requests.codes.not_found or repeat > 2):
+		break
+	repeat+=1
+	
+	
+
+print("Last page found" + str(i))
