@@ -1,0 +1,7 @@
+NLTK 
+
+Dealing with nltk.data
+- Can load files from ftp, http, and local using nltk.data.load('file here')
+- Can make a local copy using nltk.data.load('file here')
+- Can find files using nltk.data.find()
+

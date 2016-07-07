@@ -1,0 +1,3 @@
+pytesser to extract text from image
+^ requires tesseract
+^^ which also needs pillow
