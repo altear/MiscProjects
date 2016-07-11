@@ -9,11 +9,10 @@ from nltk import *
 start_time = time.time()
 
 #with Passwords/withcount/rockyou-withcount.txt
+data = []
+passwords_used_over_5 = []
+invalid_lines = []
 with open('data/Passwords/withcount/rockyou-withcount.txt', 'r', encoding="ISO-8859-1") as file:
-	data = []
-	passwords_used_over_5 = []
-	invalid_lines = []
-	
 	lines = file.readlines()
 	for line in lines:
 		try:
@@ -26,7 +25,8 @@ with open('data/Passwords/withcount/rockyou-withcount.txt', 'r', encoding="ISO-8
 			
 		except:
 			invalid_lines.append(line)
-	
+
+def basic_stats():
 	print("Number of passwords in dataset:")
 	print(sum(sublist[0] for sublist in data))
        
@@ -38,12 +38,8 @@ with open('data/Passwords/withcount/rockyou-withcount.txt', 'r', encoding="ISO-8
 
 	print("\nAverage length of password:")
 	print(sum(count*len(password) for count, password in data)/sum(sublist[0] for sublist in data))
-		
-	print("\nMost common and least common passwords:")
-	sorted_by_count = sorted(data, key = lambda item: item[0], reverse = True)
-	print([item[1] for item in sorted_by_count[:10]])
-	print([item[1] for item in sorted_by_count[-10:]])
-	
+
+def characteristics():
 	print("\nPasswords that are only alpha:")
 	print(sum(count for count, password in data if password.isalpha()))
 	
@@ -53,6 +49,13 @@ with open('data/Passwords/withcount/rockyou-withcount.txt', 'r', encoding="ISO-8
 	print("\nPasswords that are not alphnum:")
 	print(sum(count for count, password in data if not password.isalnum()))
 
+def most_least_common_passwords():
+	print("\nMost common and least common passwords:")
+	sorted_by_count = sorted(data, key = lambda item: item[0], reverse = True)
+	print([item[1] for item in sorted_by_count[:10]])
+	print([item[1] for item in sorted_by_count[-10:]])
+
+def nltk_words():
 	print("\nPasswords that are words:")
 	english_vocab = set(w.lower() for w in nltk.corpus.words.words())
 	print(sum(count for count, password in data if password in english_vocab))
@@ -95,10 +98,13 @@ with open('data/Passwords/withcount/rockyou-withcount.txt', 'r', encoding="ISO-8
 	sort_syn = sorted(synsets, key=lambda item: item[-1], reverse = True)[:10] 
 	for line in sort_syn:
 		print(line[-2:])
+	print("\nMost popular syn")
+	print(sort_syn[0])
 	print("\nCOUP DE GRAS")
 	#for synset in synsets:
 	#	print(synset)
 	
+def names():
 	names = set(w.lower() for w in nltk.corpus.names.words())
 	male_names = set(w.lower() for w in nltk.corpus.names.words('male.txt'))
 	female_names = set(w.lower() for w in nltk.corpus.names.words('female.txt'))
@@ -113,9 +119,18 @@ with open('data/Passwords/withcount/rockyou-withcount.txt', 'r', encoding="ISO-8
 	
 	print("Most common names used:")
 	print(sorted([item for item in data if item[1].isalpha() and item[1] in names], key=lambda item: item[0], reverse = True)[:10])
-	
+
+
+#names()
+#basic_stats()
+#characteristics()
+#most_least_common_passwords()
+#nltk_words()
+
 print("--- %s seconds ---" % (time.time() - start_time))
-os.system('play --no-show-progress --null --channels 1 synth %s sine %f' % ( 0.25, 100))
+os.system('play --no-show-progress --null --channels 1 synth %s sine %f' % ( 0.25, 400))
+
+
 #	print("There are " + str(len(passwords)) + " unique passwords in this list")
 
 #	print("\nThe 20 most common passwords are:")
